@@ -30,7 +30,7 @@
       function agregarTextoFacil(selector, contenido) {
         document.querySelector(selector).innerText = contenido;
       }
-      let url2 = "http://localhost:1337/api/cvs?populate=*";
+      let url2 = "https://cvstrapi.herokuapp.com/api/cvs?populate=*";
       fetch(url2)
         .then((response) => response.json())
         .then((respuesta) => {
@@ -182,7 +182,7 @@
             const message = document.querySelector("#form_message").value;
             const body = { name, email, subject, message };
             console.log("boom >> ", body);
-            fetch("http://localhost:1337/api/formularios", {
+            fetch(`https://cvstrapi.herokuapp.com/api/formularios`, {
               method: "POST",
               body: JSON.stringify({data:body}),
               // Adding headers to the request
@@ -193,6 +193,14 @@
               .then((response) => response.json())
               .then((json) => alert("gracias se ha enviado tu mensaje con exito"));
           });
+
+
+          //cargar foto
+          const foto = respuesta.data[0]?.attributes?.foto;
+          const urlFoto = "https://cvstrapi.herokuapp.com" + foto?.data?.attributes?.url;        
+          const picDom = document.querySelector("#profile-picture");
+          picDom.setAttribute('src',urlFoto);
+
         });
     </script>
   </head>
@@ -218,7 +226,7 @@
         <header id="site_header" class="header mobile-menu-hide">
           <div class="header-content">
             <div class="header-photo">
-              <img src="img/main_photo.jpg" alt="Alex Smith" />
+              <img src="img/main_photo.jpg" id="profile-picture" alt="Alex Smith" />
             </div>
             <div class="header-titles">
               <h2 id="name-user">Johana Fonseca</h2>
@@ -985,7 +993,7 @@
       function agregarTextoFacil(selector, contenido) {
         document.querySelector(selector).innerText = contenido;
       }
-      let url = "http://localhost:1337/api/cvs";
+      let url = "https://cvstrapi.herokuapp.com/api/cvs";
       fetch(url)
         .then((response) => response.json())
         .then((respuesta) => {
