@@ -3,18 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>BreezyCV - Resume / CV / vCard Template</title>
+    <title>Johana curriculum vitae</title>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1"
     />
     <meta
       name="description"
-      content="BreezyCV - Resume / CV / vCard Template"
+      content="analista, reclutadora, talento humano, recursos humanos"
     />
     <meta
       name="keywords"
-      content="vcard, resposnive, retina, resume, jquery, css3, bootstrap, Material CV, portfolio"
+      content="analista, reclutadora, talento humano, recursos humanos"
     />
     <meta name="author" content="lmpixels" />
     <link rel="shortcut icon" href="favicon.ico" />
@@ -43,8 +43,7 @@
           agregarTextoFacil("#subtitulo-2", subtitulo2);
 
           // acerca
-          const {
-            id,
+          const {           
             titulo,
             descripcion,
             edad,
@@ -65,8 +64,7 @@
       fetch(url2)
         .then((response) => response.json())
         .then((respuesta) => {
-          const {
-            id,
+          const {            
             titulo,
             titulo1,
             desc1,
@@ -194,11 +192,18 @@
               .then((json) => alert("gracias se ha enviado tu mensaje con exito"));
           });
 
-
+         
           //cargar foto
           const foto = respuesta.data[0]?.attributes?.foto;
           const urlFoto = "https://cvstrapi.herokuapp.com" + foto?.data?.attributes?.url;        
+          console.log("🚀 ~ file: index.html ~ line 201 ~ .then ~ urlFoto", urlFoto)
+          console.log("🚀 ~ file: index.html ~ line 201 ~ .then ~ urlFoto", urlFoto)
+          console.log("🚀 ~ file: index.html ~ line 201 ~ .then ~ urlFoto", urlFoto)
+          console.log("🚀 ~ file: index.html ~ line 201 ~ .then ~ urlFoto", urlFoto)
+          console.log("🚀 ~ file: index.html ~ line 201 ~ .then ~ urlFoto", urlFoto)
+
           const picDom = document.querySelector("#profile-picture");
+
           picDom.setAttribute('src',urlFoto);
 
         });
@@ -226,7 +231,7 @@
         <header id="site_header" class="header mobile-menu-hide">
           <div class="header-content">
             <div class="header-photo">
-              <img src="img/main_photo.jpg" id="profile-picture" alt="Alex Smith" />
+              <img src="" id="profile-picture" alt="Johana Fonseca" />
             </div>
             <div class="header-titles">
               <h2 id="name-user">Johana Fonseca</h2>
