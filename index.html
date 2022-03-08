@@ -27,7 +27,29 @@
     <link rel="stylesheet" href="css/magnific-popup.css" type="text/css" />
     <link rel="stylesheet" href="css/main.css" type="text/css" />
     <script>
-      function agregarTextoFacil(selector, contenido) {
+      //enviar formulario
+      const form = document.querySelector("#contact_form");
+      form.addEventListener("submit", (data) => {
+        const name = document.querySelector("#form_name").value;
+        const email = document.querySelector("#form_email").value;
+        const subject = document.querySelector("#form_subject").value;
+        const message = document.querySelector("#form_message").value;
+        const body = { name, email, subject, message };
+        console.log("boom >> ", body);
+        fetch(`https://cvstrapi.herokuapp.com/api/formularios`, {
+          method: "POST",
+          body: JSON.stringify({ data: body }),
+          // Adding headers to the request
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        })
+          .then((response) => response.json())
+          .then((json) => alert("gracias se ha enviado tu mensaje con exito"));
+      });
+    </script>
+    <script>
+      function addDom(selector, contenido) {
         document.querySelector(selector).innerText = contenido;
       }
       let url2 = "https://cvstrapi.herokuapp.com/api/cvs?populate=*";
@@ -37,13 +59,20 @@
           const nombre = respuesta.data[0]?.attributes?.nombre;
           const subtitulo = respuesta.data[0]?.attributes?.subtitulo;
           const subtitulo2 = respuesta.data[0]?.attributes?.subtitulo2;
-          agregarTextoFacil("#name-user", nombre);
-          agregarTextoFacil("#name-user-2", nombre);
-          agregarTextoFacil("#subtitulo", subtitulo);
-          agregarTextoFacil("#subtitulo-2", subtitulo2);
-
+          addDom("#name-user", nombre);
+          addDom("#name-user-2", nombre);
+          addDom("#subtitulo", subtitulo);
+          addDom("#subtitulo-2", subtitulo2);
+          const acerca = respuesta.data[0]?.attributes?.acerca;
+          //cargar foto
+          const foto = respuesta.data[0]?.attributes?.foto;
+          const urlFoto =
+            "https://cvstrapi.herokuapp.com" + foto?.data?.attributes?.url;
+          const picDom = document.querySelector("#profile-picture");
+          picDom.setAttribute("src", urlFoto);
+          if (!acerca || !foto) return;
           // acerca
-          const {           
+          const {
             titulo,
             descripcion,
             edad,
@@ -52,19 +81,22 @@
             email,
             telefono,
           } = respuesta.data[0]?.attributes?.acerca;
-          agregarTextoFacil("#acerca-titulo", titulo);
-          agregarTextoFacil("#acerca-desc", descripcion);
-          agregarTextoFacil("#acerca-year", edad);
-          agregarTextoFacil("#acerca-lugar", residencia);
-          agregarTextoFacil("#acerca-direccion", direccion);
-          agregarTextoFacil("#acerca-email", email);
-          agregarTextoFacil("#acerca-telefono", telefono);
+          addDom("#acerca-titulo", titulo);
+          addDom("#acerca-desc", descripcion);
+          addDom("#acerca-year", edad);
+          addDom("#acerca-lugar", residencia);
+          addDom("#acerca-direccion", direccion);
+          addDom("#acerca-email", email);
+          addDom("#acerca-telefono", telefono);
         });
+
       // tareas
       fetch(url2)
         .then((response) => response.json())
         .then((respuesta) => {
-          const {            
+          const tareas = respuesta.data[0]?.attributes?.tareas;
+          if (!tareas) return;
+          const {
             titulo,
             titulo1,
             desc1,
@@ -74,22 +106,24 @@
             dec3,
             titulo4,
             desc4,
-          } = respuesta.data[0]?.attributes?.tareas;
-          agregarTextoFacil("#tareas-titulo", titulo);
-          agregarTextoFacil("#tareas-titulo1", titulo1);
-          agregarTextoFacil("#tareas-desc1", desc1);
-          agregarTextoFacil("#tareas-titulo2", titulo2);
-          agregarTextoFacil("#tareas-desc2", desc2);
-          agregarTextoFacil("#tareas-titulo3", titulo3);
-          agregarTextoFacil("#tareas-desc3", dec3);
-          agregarTextoFacil("#tareas-titulo4", titulo4);
-          agregarTextoFacil("#tareas-desc4", desc4);
+          } = tareas;
+          addDom("#tareas-titulo", titulo);
+          addDom("#tareas-titulo1", titulo1);
+          addDom("#tareas-desc1", desc1);
+          addDom("#tareas-titulo2", titulo2);
+          addDom("#tareas-desc2", desc2);
+          addDom("#tareas-titulo3", titulo3);
+          addDom("#tareas-desc3", dec3);
+          addDom("#tareas-titulo4", titulo4);
+          addDom("#tareas-desc4", desc4);
         });
 
       //educacion
       fetch(url2)
         .then((response) => response.json())
         .then((respuesta) => {
+          const educacion = respuesta.data[0]?.attributes?.educacion;
+          if (!educacion) return;
           const {
             titulo1,
             desc1,
@@ -99,23 +133,25 @@
             desc2,
             lugar2,
             year2,
-          } = respuesta.data[0]?.attributes?.educacion;
+          } = educacion;
 
-          agregarTextoFacil("#educacion-titulo1", titulo1);
-          agregarTextoFacil("#educacion-desc1", desc1);
-          agregarTextoFacil("#educacion-year1", year1);
-          agregarTextoFacil("#educacion-lugar1", lugar1);
+          addDom("#educacion-titulo1", titulo1);
+          addDom("#educacion-desc1", desc1);
+          addDom("#educacion-year1", year1);
+          addDom("#educacion-lugar1", lugar1);
 
-          agregarTextoFacil("#educacion-titulo2", titulo2);
-          agregarTextoFacil("#educacion-desc2", desc2);
-          agregarTextoFacil("#educacion-year2", year2);
-          agregarTextoFacil("#educacion-lugar2", lugar2);
+          addDom("#educacion-titulo2", titulo2);
+          addDom("#educacion-desc2", desc2);
+          addDom("#educacion-year2", year2);
+          addDom("#educacion-lugar2", lugar2);
         });
 
       //skills
       fetch(url2)
         .then((response) => response.json())
         .then((respuesta) => {
+          const skills = espuesta.data[0]?.attributes?.skills;
+          if (!skills) return;
           const {
             titulo,
             titulo1,
@@ -126,21 +162,21 @@
             porcentaje3,
             titulo4,
             porcentajr4,
-          } = respuesta.data[0]?.attributes?.skills;
+          } = skills;
 
-          agregarTextoFacil("#skill-titulo", titulo);
+          addDom("#skill-titulo", titulo);
 
-          agregarTextoFacil("#skill-titulo1", titulo1);
-          agregarTextoFacil("#skill-porc1", porcentaje1);
+          addDom("#skill-titulo1", titulo1);
+          addDom("#skill-porc1", porcentaje1);
 
-          agregarTextoFacil("#skill-titulo2", titulo2);
-          agregarTextoFacil("#skill-porc2", porcentaje2);
+          addDom("#skill-titulo2", titulo2);
+          addDom("#skill-porc2", porcentaje2);
 
-          agregarTextoFacil("#skill-titulo3", titulo3);
-          agregarTextoFacil("#skill-porc3", porcentaje3);
+          addDom("#skill-titulo3", titulo3);
+          addDom("#skill-porc3", porcentaje3);
 
-          agregarTextoFacil("#skill-titulo4", titulo4);
-          agregarTextoFacil("#skill-porc4", porcentajr4);
+          addDom("#skill-titulo4", titulo4);
+          addDom("#skill-porc4", porcentajr4);
         });
 
       //trabajo
@@ -149,10 +185,10 @@
         .then((respuesta) => {
           const { id, ...trabajo } = respuesta.data[0]?.attributes?.trabajo;
           for (const key in trabajo) {
-            agregarTextoFacil(`#trabajo-${key}`, trabajo[key]);
+            addDom(`#trabajo-${key}`, trabajo[key]);
           }
           const conocimientos = respuesta.data[0]?.attributes?.conocimientos;
-          agregarTextoFacil("#conocimientos-titulo", conocimientos.titulo);
+          addDom("#conocimientos-titulo", conocimientos.titulo);
           const conocimientosLista =
             conocimientos.conocimientosLista.split(",");
           const ulConociomientos = document.querySelector(
@@ -168,44 +204,8 @@
           const { ...contacto } = respuesta.data[0]?.attributes?.contacto;
           for (const key in contacto) {
             if (key === "id") continue;
-            agregarTextoFacil(`#contacto-${key}`, contacto[key]);
+            addDom(`#contacto-${key}`, contacto[key]);
           }
-
-          //enviar formulario
-          const form = document.querySelector("#contact_form");
-          form.addEventListener("submit", (data) => {
-            const name = document.querySelector("#form_name").value;
-            const email = document.querySelector("#form_email").value;
-            const subject = document.querySelector("#form_subject").value;
-            const message = document.querySelector("#form_message").value;
-            const body = { name, email, subject, message };
-            console.log("boom >> ", body);
-            fetch(`https://cvstrapi.herokuapp.com/api/formularios`, {
-              method: "POST",
-              body: JSON.stringify({data:body}),
-              // Adding headers to the request
-              headers: {
-                "Content-type": "application/json; charset=UTF-8",
-              },
-            })
-              .then((response) => response.json())
-              .then((json) => alert("gracias se ha enviado tu mensaje con exito"));
-          });
-
-         
-          //cargar foto
-          const foto = respuesta.data[0]?.attributes?.foto;
-          const urlFoto = "https://cvstrapi.herokuapp.com" + foto?.data?.attributes?.url;        
-          console.log("🚀 ~ file: index.html ~ line 201 ~ .then ~ urlFoto", urlFoto)
-          console.log("🚀 ~ file: index.html ~ line 201 ~ .then ~ urlFoto", urlFoto)
-          console.log("🚀 ~ file: index.html ~ line 201 ~ .then ~ urlFoto", urlFoto)
-          console.log("🚀 ~ file: index.html ~ line 201 ~ .then ~ urlFoto", urlFoto)
-          console.log("🚀 ~ file: index.html ~ line 201 ~ .then ~ urlFoto", urlFoto)
-
-          const picDom = document.querySelector("#profile-picture");
-
-          picDom.setAttribute('src',urlFoto);
-
         });
     </script>
   </head>
@@ -231,7 +231,7 @@
         <header id="site_header" class="header mobile-menu-hide">
           <div class="header-content">
             <div class="header-photo">
-              <img src="" id="profile-picture" alt="Johana Fonseca" />
+              <img src="img/johana.png" id="profile-picture" alt="Johana Fonseca" />
             </div>
             <div class="header-titles">
               <h2 id="name-user">Johana Fonseca</h2>
@@ -995,7 +995,7 @@
     <script src="js/validator.js"></script>
     <script src="js/main.js"></script>
     <script>
-      function agregarTextoFacil(selector, contenido) {
+      function addDom(selector, contenido) {
         document.querySelector(selector).innerText = contenido;
       }
       let url = "https://cvstrapi.herokuapp.com/api/cvs";
@@ -1005,10 +1005,10 @@
           const nombre = respuesta.data[0]?.attributes?.nombre;
           const subtitulo = respuesta.data[0]?.attributes?.subtitulo;
           const subtitulo2 = respuesta.data[0]?.attributes?.subtitulo2;
-          agregarTextoFacil("#name-user", nombre);
-          agregarTextoFacil("#name-user-2", nombre);
-          agregarTextoFacil("#subtitulo", subtitulo);
-          agregarTextoFacil("#subtitulo-2", subtitulo2);
+          addDom("#name-user", nombre);
+          addDom("#name-user-2", nombre);
+          addDom("#subtitulo", subtitulo);
+          addDom("#subtitulo-2", subtitulo2);
         });
     </script>
   </body>
