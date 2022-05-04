@@ -21,7 +21,8 @@
     function addDom(selector, contenido) {
       document.querySelector(selector).innerText = contenido;
     }
-    let url2 = "https://cvstrapi.herokuapp.com/api/cvs?populate=*";
+    // https://cvapicurriculum.herokuapp.com/
+    let url2 = "https://cvapicurriculum.herokuapp.com/api/cvs?populate=*";
     // let url2 = "http://localhost:1337/api/cvs?populate=*";
     
     fetch(url2)
@@ -31,7 +32,7 @@
         const subtitulo = respuesta.data[0]?.attributes?.subtitulo;
         const subtitulo2 = respuesta.data[0]?.attributes?.subtitulo2;
         console.log('🚀respuesta >>',respuesta);
-        const url = "https://cvstrapi.herokuapp.com";
+        const url = "https://cvapicurriculum.herokuapp.com";
         // const url = "http://localhost:1337";
         const fileUrl = url + respuesta.data[0]?.attributes?.hojadevida?.data?.attributes?.url;
         console.log('🚀fileUrl😘 >>',fileUrl);
@@ -50,7 +51,7 @@
         //cargar foto
         const foto = respuesta.data[0]?.attributes?.foto;
         const urlFoto =
-          "https://cvstrapi.herokuapp.com" + foto?.data?.attributes?.url;
+          "https://cvapicurriculum.herokuapp.com" + foto?.data?.attributes?.url;
         const picDom = document.querySelector("#profile-picture");
         picDom.setAttribute("src", urlFoto);
         if (!acerca || !foto) return;
@@ -204,7 +205,7 @@
         console.log('🚀contenido >>',contenido);
       }
     }
-    let url22 = "https://cvstrapi.herokuapp.com/api/cvs?populate=*";
+    let url22 = "https://cvapicurriculum.herokuapp.com/api/cvs?populate=*";
     fetch(url22)
       .then((response) => response.json())
       .then((respuesta) => {
@@ -219,7 +220,7 @@
         //cargar foto
         const foto = respuesta.data[0]?.attributes?.foto;
         const urlFoto =
-          "https://cvstrapi.herokuapp.com" + foto?.data?.attributes?.url;
+          "https://cvapicurriculum.herokuapp.com" + foto?.data?.attributes?.url;
         const picDom = document.querySelector("#profile-picture");
         picDom.setAttribute("src", urlFoto);
         if (!acerca || !foto) return;
@@ -990,7 +991,7 @@
         console.log('🚀contenido >>',contenido);
       }
     }
-    let url = "https://cvstrapi.herokuapp.com/api/cvs";
+    let url = "https://cvapicurriculum.herokuapp.com/api/cvs";
     fetch(url)
       .then((response) => response.json())
       .then((respuesta) => {
@@ -1015,7 +1016,7 @@
       const message = document.querySelector("#form_message").value;
       const body = { name, email, subject, message };
       console.log("boom >> ", body);
-      fetch(`https://cvstrapi.herokuapp.com/api/formularios`, {
+      fetch(`https://cvapicurriculum.herokuapp.com/api/formularios`, {
         method: "POST",
         body: JSON.stringify({ data: body }),
         // Adding headers to the request
