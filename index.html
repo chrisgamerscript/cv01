@@ -21,8 +21,8 @@
     function addDom(selector, contenido) {
       document.querySelector(selector).innerText = contenido;
     }
-    // let url2 = "https://cvstrapi.herokuapp.com/api/cvs?populate=*";
-    let url2 = "http://localhost:1337/api/cvs?populate=*";
+    let url2 = "https://cvstrapi.herokuapp.com/api/cvs?populate=*";
+    // let url2 = "http://localhost:1337/api/cvs?populate=*";
     
     fetch(url2)
       .then((response) => response.json())
@@ -31,8 +31,8 @@
         const subtitulo = respuesta.data[0]?.attributes?.subtitulo;
         const subtitulo2 = respuesta.data[0]?.attributes?.subtitulo2;
         console.log('🚀respuesta >>',respuesta);
-        // const url = "https://cvstrapi.herokuapp.com";
-        const url = "http://localhost:1337";
+        const url = "https://cvstrapi.herokuapp.com";
+        // const url = "http://localhost:1337";
         const fileUrl = url + respuesta.data[0]?.attributes?.hojadevida?.data?.attributes?.url;
         console.log('🚀fileUrl😘 >>',fileUrl);
         const fileName = respuesta.data[0]?.attributes?.hojadevida?.data?.attributes?.name;
