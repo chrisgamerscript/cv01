@@ -21,13 +21,27 @@
     function addDom(selector, contenido) {
       document.querySelector(selector).innerText = contenido;
     }
-    let url2 = "https://cvstrapi.herokuapp.com/api/cvs?populate=*";
+    // let url2 = "https://cvstrapi.herokuapp.com/api/cvs?populate=*";
+    let url2 = "http://localhost:1337/api/cvs?populate=*";
+    
     fetch(url2)
       .then((response) => response.json())
       .then((respuesta) => {
         const nombre = respuesta.data[0]?.attributes?.nombre;
         const subtitulo = respuesta.data[0]?.attributes?.subtitulo;
         const subtitulo2 = respuesta.data[0]?.attributes?.subtitulo2;
+        console.log('🚀respuesta >>',respuesta);
+        // const url = "https://cvstrapi.herokuapp.com";
+        const url = "http://localhost:1337";
+        const fileUrl = url + respuesta.data[0]?.attributes?.hojadevida?.data?.attributes?.url;
+        console.log('🚀fileUrl😘 >>',fileUrl);
+        const fileName = respuesta.data[0]?.attributes?.hojadevida?.data?.attributes?.name;
+        console.log('🚀fileName >>',fileName);
+        const downloadButton = document.querySelector("#download-file");
+
+        downloadButton.setAttribute("href",fileUrl);
+        downloadButton.setAttribute("download",fileName);
+
         addDom("#name-user", nombre);
         addDom("#name-user-2", nombre);
         addDom("#subtitulo", subtitulo);
@@ -119,7 +133,7 @@
     fetch(url2)
       .then((response) => response.json())
       .then((respuesta) => {
-        const skills = espuesta.data[0]?.attributes?.skills;
+        const skills = respuesta.data[0]?.attributes?.skills;
         if (!skills) return;
         const {
           titulo,
@@ -279,7 +293,7 @@
     fetch(url2)
       .then((response) => response.json())
       .then((respuesta) => {
-        const skills = espuesta.data[0]?.attributes?.skills;
+        const skills = respuesta.data[0]?.attributes?.skills;
         if (!skills) return;
         const {
           titulo,
@@ -407,19 +421,13 @@
         <div class="social-links">
           <ul>
             <li>
-              <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-            </li>
-            <li>
-              <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
-            </li>
-            <li>
-              <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
-            </li>
+              <a href="http://linkedin.com/in/sandra-farias-pineda-00710258" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+            </li>       
           </ul>
         </div>
 
-        <div class="header-buttons">
-          <a href="#" target="_blank" class="btn btn-primary">Descargar CV</a>
+        <div class="header-buttons">          
+          <a href="#" id="download-file" target="_blank" class="btn btn-primary">Descargar CV</a>
         </div>
 
         <div class="copyrights">© 2022 Todos los derechos reservados.</div>
